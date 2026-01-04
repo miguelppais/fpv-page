@@ -88,7 +88,7 @@
             const [showAbout, setShowAbout] = useState(false);
 
             // Verified path for your professional photo
-            const profileUrl = "assets/Miguel_Pais_FPV_Photo.jpg";
+            const profileUrl = "assets/Miguel_Pais_FPV_photo.jpg";
 
             const uniqueGoals = useMemo(() => [...new Set(FPV_DATA.map(d => d.goal))], []);
             const filteredData = useMemo(() => selectedGoal ? FPV_DATA.filter(d => d.goal === selectedGoal) : FPV_DATA.filter(d => d.category === activeCategory), [selectedGoal, activeCategory]);
