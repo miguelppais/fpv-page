@@ -20,16 +20,29 @@
     <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-sky-500/10 blur-[120px] rounded-full"></div>
     <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-sky-500/10 blur-[120px] rounded-full"></div>
 
-    <main class="max-w-md w-full text-center z-10 space-y-10 animate-in fade-in zoom-in duration-700">
+    <main class="max-w-md w-full text-center z-10 space-y-8 animate-in fade-in zoom-in duration-700">
         
-        <!-- Logo Section - Central Branding -->
-        <div class="flex justify-center">
-            <div class="w-48 h-48 md:w-56 md:h-56 relative group">
-                <div class="absolute inset-0 bg-sky-500/10 blur-2xl rounded-full group-hover:bg-sky-500/20 transition-all duration-500"></div>
-                <img src="assets/MP_FPV_logo_wt.png" 
-                     alt="Miguel Pais FPV Logo" 
-                     class="w-full h-full object-contain relative transition-transform duration-500 group-hover:scale-105"
-                     onerror="this.src='https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'">
+        <!-- Profile & Branding Header -->
+        <div class="space-y-6">
+            <!-- Professional Portrait -->
+            <div class="flex justify-center">
+                <div class="w-24 h-24 md:w-32 md:h-32 relative group">
+                    <div class="absolute inset-0 bg-sky-500/20 blur-lg rounded-full group-hover:bg-sky-500/40 transition-all duration-500"></div>
+                    <img src="assets/Miguel_Pais_FPV_Photo.jpg" 
+                         alt="Miguel Pais" 
+                         class="w-full h-full object-cover rounded-full border-2 border-slate-800 relative transition-transform duration-500 group-hover:scale-105 shadow-2xl"
+                         onerror="this.src='https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'">
+                </div>
+            </div>
+
+            <!-- Logo Section - Central Branding -->
+            <div class="flex justify-center">
+                <div class="w-48 h-16 md:w-56 md:h-20 relative group">
+                    <img src="assets/MP_FPV_logo_wt.png" 
+                         alt="Miguel Pais FPV Logo" 
+                         class="w-full h-full object-contain relative transition-transform duration-500 group-hover:scale-105"
+                         onerror="this.style.display='none'">
+                </div>
             </div>
         </div>
 
@@ -40,7 +53,7 @@
                     Professional FPV Drone Pilot
                 </p>
             </div>
-            <p class="text-slate-400 text-sm md:text-base leading-relaxed font-medium">
+            <p class="text-slate-400 text-sm md:text-base leading-relaxed font-medium px-2">
                 Providing high-end aerial video, professional photography, and precision mapping services tailored for industrial and creative projects.
             </p>
         </div>
