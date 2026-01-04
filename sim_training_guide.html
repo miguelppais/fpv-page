@@ -44,9 +44,9 @@
 
         const FPV_DATA = [
             { id: 1, category: "Environmental", goal: "Wind & Turbulence", sim: "TRYP FPV", link: "https://store.steampowered.com/app/1881200/", map: "Alizol / San Carlo", tips: "Access via Environment Settings. Set Wind to 15km/h and Turbulence to 20%. Practice 'crabbing' to maintain a straight path.", drone: "Any: Practice fighting drafts on 5\" or 7\"", icon: "wind" },
-            { id: 2, category: "Environmental", goal: "Battery Simulation (Voltage Sag)", sim: "Uncrashed", link: "https://store.steampowered.com/app/1682970/", map: "Global (Any)", tips: "Enable 'Realistic Power Dynamics'. Practice catching the drone at the bottom of a dive when the battery hits 3.5V to learn thrust limitations.", drone: "5\" Freestyle: Mark5, Apex DC5", icon: "battery" },
-            { id: 3, category: "Environmental", goal: "Battery Simulation (Voltage Sag)", sim: "Liftoff", link: "https://store.steampowered.com/app/441830/", map: "Global (Any)", tips: "Toggle 'Battery Simulation'. Use lower C-rated batteries in the workbench to force aggressive sag.", drone: "3.5\" Cinewhoop: Cinelog35 V2", icon: "battery" },
-            { id: 4, category: "Environmental", goal: "Battery Simulation (Voltage Sag)", sim: "Liftoff: Micro Drones", link: "https://store.steampowered.com/app/1432320/", map: "Global (Any)", tips: "Select 'Authentic Mode'. Mimics rapid voltage drop of 1S batteries.", drone: "65mm Whoop: Air65, Mobula6", icon: "battery" },
+            { id: 2, category: "Environmental", goal: "Battery Simulation", sim: "Uncrashed", link: "https://store.steampowered.com/app/1682970/", map: "Global (Any)", tips: "Enable 'Realistic Power Dynamics'. Practice catching the drone at the bottom of a dive when the battery hits 3.5V to learn thrust limitations.", drone: "5\" Freestyle: Mark5, Apex DC5", icon: "battery" },
+            { id: 3, category: "Environmental", goal: "Battery Simulation", sim: "Liftoff", link: "https://store.steampowered.com/app/441830/", map: "Global (Any)", tips: "Toggle 'Battery Simulation'. Use lower C-rated batteries in the workbench to force aggressive sag.", drone: "3.5\" Cinewhoop: Cinelog35 V2", icon: "battery" },
+            { id: 4, category: "Environmental", goal: "Battery Simulation", sim: "Liftoff: Micro Drones", link: "https://store.steampowered.com/app/1432320/", map: "Global (Any)", tips: "Select 'Authentic Mode'. Mimics rapid voltage drop of 1S batteries.", drone: "65mm Whoop: Air65, Mobula6", icon: "battery" },
             { id: 5, category: "Signal", goal: "Digital Signal Simulation", sim: "TRYP FPV", link: "https://store.steampowered.com/app/1881200/", map: "Global Settings", tips: "Enable Digital Video Effects. Practice turning back the moment pixelation begins.", drone: "Digital: DJI O3, Walksnail", icon: "wifi" },
             { id: 6, category: "Signal", goal: "Digital Signal Simulation", sim: "Liftoff: Micro Drones", link: "https://store.steampowered.com/app/1432320/", map: "Global Settings", tips: "Select 'Digital Artifacts'. Simulates HD link stutter from indoor multipath.", drone: "Digital: Walksnail Avatar", icon: "wifi" },
             { id: 7, category: "Signal", goal: "Analog Signal Simulation", sim: "Liftoff", link: "https://store.steampowered.com/app/441830/", map: "Global Settings", tips: "Enable 'Analog Noise'. Learn how ghosting looks behind concrete walls.", drone: "Analog: Foxeer Reaper", icon: "wifi" },
@@ -55,6 +55,16 @@
             { id: 32, category: "Technical", goal: "Interior House Tours", sim: "FPV Logic", link: "https://store.steampowered.com/app/2398030/", map: "Suburbs / Neighborhood", tips: "The gold standard for real estate practice. Multiple fully furnished houses with diverse layouts. Practice room-to-room transitions and exterior flow.", drone: "2\" - 3\" Cinewhoop: Pavo25 V2", icon: "home" },
             { id: 10, category: "Technical", goal: "Interior House Tours", sim: "TRYP FPV", link: "https://store.steampowered.com/app/1881200/", map: "Real Spots (Bardwell House)", tips: "UE5 version with realistic shadows. Smooth cinematic movements.", drone: "Sub-250g: QAV-S 2 SE", icon: "home" },
             { id: 11, category: "Technical", goal: "Interior House Tours", sim: "Liftoff: Micro Drones", link: "https://store.steampowered.com/app/1432320/", map: "The Apartment", tips: "Fly under tables to feel the 'ground effect' suction.", drone: "65mm Whoop: Mobula6 2024", icon: "gamepad-2" },
+            
+            // AUTOMOTIVE GOALS
+            { id: 33, category: "Automotive", goal: "Filming Cars: Race Track", sim: "Uncrashed", link: "https://store.steampowered.com/app/1682970/", map: "Race Track", tips: "Maintain distance from the lead car while matching their racing line. Focus on corner apex transitions.", drone: "5\" Speed: iFlight Mach R5", icon: "car" },
+            { id: 34, category: "Automotive", goal: "Filming Cars: Race Track", sim: "Liftoff", link: "https://store.steampowered.com/app/441830/", map: "Slipstream DLC Tracks", tips: "Use the Slipstream physics to track high-speed vehicles. Practice diving into the corkscrew behind a car.", drone: "5\" Freestyle: Mark5", icon: "car" },
+            { id: 35, category: "Automotive", goal: "Filming Cars: Drifting", sim: "Uncrashed", link: "https://store.steampowered.com/app/1682970/", map: "Parking Lot / Drift Track", tips: "Proximity is key. Try to keep the drone steady near the driver-side door during a slide.", drone: "5\" Freestyle: Apex DC5", icon: "car" },
+            { id: 36, category: "Automotive", goal: "Filming Cars: Drifting", sim: "Liftoff", link: "https://store.steampowered.com/app/441830/", map: "Slipstream Drift Scene", tips: "Coordinate your yaw with the car's rotation. Use the 'Chase' camera settings to verify framing.", drone: "5\" Cinematic: AOS 5", icon: "car" },
+            { id: 37, category: "Automotive", goal: "Filming Cars: Slow Driving", sim: "Liftoff", link: "https://store.steampowered.com/app/441830/", map: "Slipstream Mountain (Pickup)", tips: "Practice orbiting a slow-moving truck on a cliffside. Focus on 'creeping' throttle management.", drone: "3.5\" Cinewhoop: Cinelog35", icon: "car" },
+            { id: 38, category: "Automotive", goal: "Filming Cars: Rally", sim: "TRYP FPV", link: "https://store.steampowered.com/app/1881200/", map: "Rally Stage", tips: "Follow cars through tight forest bends. Predict jumps to capture the best air-time angle.", drone: "5\" Freestyle: SpeedyBee Bee35", icon: "car" },
+            { id: 39, category: "Automotive", goal: "Filming Cars: Offroad", sim: "Uncrashed", link: "https://store.steampowered.com/app/1682970/", map: "Desert Map", tips: "Chase offroad rigs across dunes. Practice tracking at a 3/4 angle to show vehicle suspension work.", drone: "7\" Long Range: Chimera7", icon: "car" },
+
             { id: 25, category: "Technical", goal: "Commercial / Industrial Tours", sim: "FPV Logic", link: "https://store.steampowered.com/app/2398030/", map: "Factory 1 & 2", tips: "Consistent cinemapping through complex structures. Focus on pipe proximity.", drone: "3.5\" Cinematic or 5\" Cine", icon: "building-2" },
             { id: 26, category: "Technical", goal: "Commercial / Industrial Tours", sim: "Uncrashed", link: "https://store.steampowered.com/app/1682970/", map: "Industrial Warehouse", tips: "Navigate catwalks and vertical shelving for inspection practice.", drone: "3\" to 5\" Cinewhoop", icon: "building-2" },
             { id: 27, category: "Technical", goal: "Commercial / Industrial Tours", sim: "Liftoff: Micro Drones", link: "https://store.steampowered.com/app/1432320/", map: "Office / Workspace", tips: "Master tight throttle management for retail or office tours.", drone: "65mm - 75mm Whoop", icon: "briefcase" },
@@ -76,6 +86,7 @@
 
         const CATEGORIES = [
             { name: "Environmental", label: "Wind & Physics", icon: "wind" },
+            { name: "Automotive", label: "Car Filming", icon: "car" },
             { name: "Signal", label: "Signal Sim", icon: "wifi" },
             { name: "Technical", label: "Indoor & Technical", icon: "home" },
             { name: "Racing", label: "Pro Racing", icon: "flag" },
@@ -208,3 +219,4 @@
     </script>
 </body>
 </html>
+
