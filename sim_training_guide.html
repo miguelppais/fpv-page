@@ -87,7 +87,7 @@
             const [activeCategory, setActiveCategory] = useState("Environmental");
             const [showAbout, setShowAbout] = useState(false);
 
-            // Updated profile photo path
+            // Updated profile photo path to match assets folder exactly
             const profileUrl = "assets/Miguel_Pais_FPV_Photo.jpg";
 
             const uniqueGoals = useMemo(() => [...new Set(FPV_DATA.map(d => d.goal))], []);
