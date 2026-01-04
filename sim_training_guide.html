@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FPV Sim Training Guide by Miguel Pais</title>
+    <title>FPV Sim Training Guide by MiguelPais.FPV</title>
     <!-- Scripts for Build-less React -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -87,7 +87,8 @@
             const [activeCategory, setActiveCategory] = useState("Environmental");
             const [showAbout, setShowAbout] = useState(false);
 
-            const profileUrl = "https://instagram.flis8-2.fna.fbcdn.net/v/t51.2885-19/496874128_17842742040487196_3666766007655439963_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.flis8-2.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2QEpmF-xMXFZPVbzyeHT2TBA4DoqLKPjR7jvFF7uSTas6KwOOkUJA4XH3b-TQQ8LUCo6P-SNNxC1cZP2iUMsR1O6&_nc_ohc=-5VNfSoV2JYQ7kNvwF7NOWO&_nc_gid=Xl9a8LGqJuzfCppOeMdQcQ&edm=APoiHPcBAAAA&ccb=7-5&oh=00_Afo2J3fg5TWFzFwvYOXgt-RnSJLAORfsQTcQcUJk3RGpkg&oe=69606B4C&_nc_sid=22de04";
+            // Updated profile photo path
+            const profileUrl = "assets/Miguel_Pais_FPV_Photo.jpg";
 
             const uniqueGoals = useMemo(() => [...new Set(FPV_DATA.map(d => d.goal))], []);
             const filteredData = useMemo(() => selectedGoal ? FPV_DATA.filter(d => d.goal === selectedGoal) : FPV_DATA.filter(d => d.category === activeCategory), [selectedGoal, activeCategory]);
@@ -100,7 +101,7 @@
                                 <Icon name="gamepad-2" className="mr-2" /> PC FPV Reference 2026
                             </div>
                             <h1 className="text-2xl sm:text-3xl md:text-5xl font-black mb-2 tracking-tight uppercase leading-tight">FPV SIM <span className="text-sky-500">TRAINING GUIDE</span></h1>
-                            <div className="text-slate-400 font-bold text-xs md:text-sm tracking-widest uppercase mb-6 md:mb-8">by Miguel Pais</div>
+                            <div className="text-slate-400 font-bold text-xs md:text-sm tracking-widest uppercase mb-6 md:mb-8">By MiguelPais.FPV</div>
                             <button onClick={() => setShowAbout(!showAbout)} className="text-[10px] md:text-xs font-bold text-slate-500 hover:text-sky-400 uppercase tracking-widest border border-slate-800 px-5 py-2 md:px-6 md:py-2.5 rounded-full transition-all">
                                 {showAbout ? "Back to Training" : "About & Contact"}
                             </button>
@@ -110,10 +111,11 @@
                             <div className="max-w-4xl mx-auto animate-in">
                                 <div className="bg-slate-900 border border-slate-800 rounded-2xl md:rounded-3xl p-6 md:p-12 shadow-2xl space-y-8 md:space-y-12">
                                     <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
-                                        <img src={profileUrl} className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-slate-800 shadow-2xl object-cover" referrerPolicy="no-referrer" />
+                                        <img src={profileUrl} className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-slate-800 shadow-2xl object-cover" 
+                                             onerror="this.src='https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'" />
                                         <section className="space-y-4 flex-1 text-center md:text-left">
                                             <h2 className="text-2xl md:text-3xl font-black text-white">Miguel Pais</h2>
-                                            <p className="text-slate-400 text-base md:text-lg">FPV Pilot & Content Creator. This guide helps pilots bridge the gap between simulation and real-world high-stakes flight.</p>
+                                            <p className="text-slate-400 text-base md:text-lg">FPV Pilot & Content Creator. This guide helps pilots bridge the gap between simulation and real-world high-stakes flight. Every scenario is 2026-verified.</p>
                                             <div className="pt-2 md:pt-4 space-y-4 flex flex-col items-center md:items-start">
                                                 <a href="mailto:fpv@miguelppais.com" className="flex items-center text-slate-300 hover:text-sky-400 transition-colors group"><Icon name="mail" className="mr-3 group-hover:bg-sky-500/10 p-1 rounded" /> fpv@miguelppais.com</a>
                                                 <div className="flex space-x-3 md:space-x-4">
