@@ -8,47 +8,19 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap');
-        
-        body { 
-            font-family: 'Inter', sans-serif; 
-        }
-
+        body { font-family: 'Inter', sans-serif; }
         .bg-glow {
             background: radial-gradient(circle at center, rgba(56, 189, 248, 0.05) 0%, transparent 70%);
         }
-
-        /* Smooth fade-in animation for page load */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-content {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-
-        /* Custom scrollbar for a cleaner look */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #020617;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #334155;
-        }
     </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center justify-center p-6 bg-glow relative overflow-x-hidden">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center justify-center p-6 bg-glow relative overflow-hidden">
     
-    <!-- Background Decoration Blobs -->
-    <div class="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-sky-500/10 blur-[120px] rounded-full pointer-events-none"></div>
-    <div class="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-sky-500/10 blur-[120px] rounded-full pointer-events-none"></div>
+    <!-- Background Decoration -->
+    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-sky-500/10 blur-[120px] rounded-full"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-sky-500/10 blur-[120px] rounded-full"></div>
 
-    <main class="max-w-md w-full text-center z-10 space-y-8 animate-content">
+    <main class="max-w-md w-full text-center z-10 space-y-8 animate-in fade-in zoom-in duration-700">
         
         <!-- Profile & Branding Header -->
         <div class="space-y-6">
@@ -56,34 +28,23 @@
             <div class="flex justify-center">
                 <div class="w-24 h-24 md:w-32 md:h-32 relative group">
                     <div class="absolute inset-0 bg-sky-500/20 blur-lg rounded-full group-hover:bg-sky-500/40 transition-all duration-500"></div>
-                    <!-- Placeholder logic if the asset is missing -->
-                    <div class="w-full h-full rounded-full border-2 border-slate-800 bg-slate-900 flex items-center justify-center overflow-hidden relative shadow-2xl">
-                        <img src="assets/Miguel_Pais_FPV_photo.jpg" 
-                             alt="Miguel Pais" 
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                        <div class="hidden absolute inset-0 items-center justify-center text-sky-500 font-bold text-2xl bg-slate-900">
-                            MP
-                        </div>
-                    </div>
+                    <img src="assets/Miguel_Pais_FPV_photo.jpg" 
+                         alt="Miguel Pais" 
+                         class="w-full h-full object-cover rounded-full border-2 border-slate-800 relative transition-transform duration-500 group-hover:scale-105 shadow-2xl">
                 </div>
             </div>
 
-            <!-- Logo Section -->
+            <!-- Logo Section - Central Branding -->
             <div class="flex justify-center">
-                <div class="w-48 h-16 md:w-56 md:h-20 relative group flex items-center justify-center">
+                <div class="w-48 h-16 md:w-56 md:h-20 relative group">
                     <img src="assets/Miguel_Pais_FPV_logo_wt.png" 
-                         alt="Miguel Pais FPV" 
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+                         alt="Miguel Pais FPV Logo" 
                          class="w-full h-full object-contain relative transition-transform duration-500 group-hover:scale-105">
-                    <div class="hidden text-2xl font-black tracking-tighter text-white uppercase italic">
-                        Miguel <span class="text-sky-500">Pais</span> FPV
-                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Professional Bio -->
+        <!-- Professional Bio & Services -->
         <div class="space-y-4">
             <div class="space-y-1">
                 <p class="text-sky-400 text-xs md:text-sm font-bold tracking-[0.3em] uppercase">
@@ -95,43 +56,50 @@
             </p>
         </div>
 
-        <!-- Social Connections -->
-        <div class="space-y-4">
-            <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest text-center">Connect for Missions</p>
-            <div class="grid grid-cols-4 gap-4">
-                <a href="https://www.tiktok.com/@miguelpais.fpv" target="_blank" class="p-4 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl flex items-center justify-center hover:text-sky-400 hover:border-sky-500/50 transition-all shadow-lg hover:-translate-y-1" title="TikTok">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-tiktok"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
+        <!-- Social Media Section -->
+        <div class="space-y-6">
+            <p class="text-[10px] text-slate-500 uppercase font-bold tracking-widest text-center">
+                Check out my videos and follow me on social media
+            </p>
+            
+            <div class="grid grid-cols-3 gap-4">
+                <a href="https://www.tiktok.com/@miguelpais.fpv" target="_blank" class="p-4 bg-slate-900 border border-slate-800 rounded-2xl flex items-center justify-center hover:text-sky-400 hover:border-sky-500/50 transition-all shadow-lg hover:-translate-y-1" title="TikTok">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" /></svg>
                 </a>
-                <a href="https://www.instagram.com/miguelpais.fpv" target="_blank" class="p-4 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl flex items-center justify-center hover:text-sky-400 hover:border-sky-500/50 transition-all shadow-lg hover:-translate-y-1" title="Instagram">
-                    <i data-lucide="instagram" class="w-5 h-5"></i>
+                <a href="https://www.instagram.com/miguelpais.fpv" target="_blank" class="p-4 bg-slate-900 border border-slate-800 rounded-2xl flex items-center justify-center hover:text-sky-400 hover:border-sky-500/50 transition-all shadow-lg hover:-translate-y-1" title="Instagram">
+                    <i data-lucide="instagram"></i>
                 </a>
-                <a href="https://youtube.com/@miguelpaisfpv" target="_blank" class="p-4 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl flex items-center justify-center hover:text-sky-400 hover:border-sky-500/50 transition-all shadow-lg hover:-translate-y-1" title="YouTube">
-                    <i data-lucide="youtube" class="w-5 h-5"></i>
+                <a href="https://youtube.com/@miguelpaisfpv" target="_blank" class="p-4 bg-slate-900 border border-slate-800 rounded-2xl flex items-center justify-center hover:text-sky-400 hover:border-sky-500/50 transition-all shadow-lg hover:-translate-y-1" title="YouTube">
+                    <i data-lucide="youtube"></i>
                 </a>
-                <a href="mailto:fpv@miguelppais.com" class="p-4 bg-slate-900/50 backdrop-blur-sm border border-slate-800 rounded-2xl flex items-center justify-center hover:text-sky-400 hover:border-sky-500/50 transition-all shadow-lg hover:-translate-y-1" title="Email Contact">
-                    <i data-lucide="mail" class="w-5 h-5"></i>
+            </div>
+
+            <!-- Call to Action Section -->
+            <div class="space-y-4 pt-2">
+                <p class="text-slate-400 text-sm italic px-4 leading-relaxed">
+                    If you think I am the right person to add a WOW factor to your brand, activities or locations
+                </p>
+                <a href="mailto:fpv@miguelppais.com" class="block w-full py-4 bg-sky-500 hover:bg-sky-400 text-slate-950 font-black text-sm uppercase tracking-[0.2em] rounded-2xl transition-all shadow-[0_0_20px_rgba(56,189,248,0.3)] active:scale-[0.98]">
+                    Contact Me
                 </a>
             </div>
         </div>
 
-        <!-- Tools and Resources List -->
-        <div class="space-y-4 pt-6 text-left">
-            <h2 class="text-xs font-bold text-slate-500 uppercase tracking-[0.2em] border-b border-slate-800/50 pb-2 px-1">
+        <!-- FPV Tools List -->
+        <div class="space-y-4 pt-4 text-left">
+            <h2 class="text-xs font-bold text-slate-500 uppercase tracking-[0.2em] border-b border-slate-800 pb-2 px-1">
                 My Drone and FPV Tools
             </h2>
-            <div id="tools-container" class="space-y-3">
-                <!-- Dynamically populated -->
-            </div>
+            <div id="tools-container" class="space-y-3"></div>
         </div>
 
     </main>
 
-    <footer class="mt-12 text-[10px] text-slate-600 uppercase font-bold tracking-[0.3em] pb-8">
+    <footer class="mt-12 text-[10px] text-slate-600 uppercase font-bold tracking-[0.3em]">
         © 2026 Miguel Pais
     </footer>
 
     <script>
-        // Tools data array for easy management
         const TOOLS = [
             {
                 title: "Sim Training Guide",
@@ -143,38 +111,24 @@
 
         function renderTools() {
             const container = document.getElementById('tools-container');
-            if (!container) return;
-
             container.innerHTML = TOOLS.map(tool => `
-                <a href="${tool.link}" class="group flex items-center justify-between bg-slate-900/40 backdrop-blur-sm border border-slate-800 p-4 rounded-2xl hover:border-sky-500/50 hover:bg-slate-800/60 transition-all shadow-xl">
+                <a href="${tool.link}" class="group flex items-center justify-between bg-slate-900 border border-slate-800 p-4 rounded-2xl hover:border-sky-500/50 hover:bg-slate-800 transition-all shadow-xl">
                     <div class="flex items-center">
                         <div class="p-3 bg-slate-950 rounded-xl text-sky-500 mr-4 group-hover:scale-110 transition-transform">
-                            <i data-lucide="${tool.icon}" class="w-5 h-5"></i>
+                            <i data-lucide="${tool.icon}"></i>
                         </div>
                         <div>
                             <div class="text-sm font-bold text-white uppercase tracking-tight">${tool.title}</div>
                             <div class="text-[10px] text-slate-500 uppercase font-bold tracking-widest">${tool.subtitle}</div>
                         </div>
                     </div>
-                    <div class="w-8 h-8 flex items-center justify-center">
-                        <i data-lucide="chevron-right" class="w-5 h-5 text-slate-600 group-hover:text-sky-500 group-hover:translate-x-1 transition-all"></i>
-                    </div>
+                    <i data-lucide="chevron-right" class="text-slate-600 group-hover:text-sky-500 transition-colors"></i>
                 </a>
             `).join('');
-
-            // Re-initialize icons for dynamic content
-            if (window.lucide) {
-                lucide.createIcons();
-            }
+            lucide.createIcons();
         }
-
-        // Initialize on DOM Load
-        window.addEventListener('DOMContentLoaded', () => {
-            renderTools();
-            if (window.lucide) {
-                lucide.createIcons();
-            }
-        });
+        renderTools();
     </script>
 </body>
 </html>
+
