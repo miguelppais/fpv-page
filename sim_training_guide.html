@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPV Sim Training Guide by Miguel Pais</title>
+    <!-- Scripts for Build-less React -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+        body { 
+            font-family: 'Inter', sans-serif; 
+            -webkit-tap-highlight-color: transparent;
+        }
+        .animate-in { animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useMemo, useEffect } = React;
+
+        const Icon = ({ name, size = 18, className = "" }) => {
+            useEffect(() => {
+                lucide.createIcons();
+            }, [name]);
+            return <i data-lucide={name} className={className} style={{ width: size, height: size }}></i>;
+        };
+
+        const TikTokIcon = () => (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+            </svg>
+        );
+
+        const FPV_DATA = [
+            { id: 1, category: "Environmental", goal: "Wind & Turbulence", sim: "TRYP FPV", link: "https://store.steampowered.com/app/1881200/", map: "Alizol / San Carlo", tips: "Access via Environment Settings. Set Wind to 15km/h and Turbulence to 20%. Practice 'crabbing' to maintain a straight path.", drone: "Any: Practice fighting drafts on 5\" or 7\"", icon: "wind" },
+            { id: 2, category: "Environmental", goal: "Battery Simulation (Voltage Sag)", sim: "Uncrashed", link: "https://store.steampowered.com/app/1682970/", map: "Global (Any)", tips: "Enable 'Realistic Power Dynamics'. Practice catching the drone at the bottom of a dive when the battery hits 3.5V to learn thrust limitations.", drone: "5\" Freestyle: Mark5, Apex DC5", icon: "battery" },
+            { id: 3, category: "Environmental", goal: "Battery Simulation (Voltage Sag)", sim: "Liftoff", link: "https://store.steampowered.com/app/441830/", map: "Global (Any)", tips: "Toggle 'Battery Simulation'. Use lower C-rated batteries in the workbench to force aggressive sag.", drone: "3.5\" Cinewhoop: Cinelog35 V2", icon: "battery" },
+            { id: 4, category: "Environmental", goal: "Battery Simulation (Voltage Sag)", sim: "Liftoff: Micro Drones", link: "https://store.steampowered.com/app/1432320/", map: "Global (Any)", tips: "Select 'Authentic Mode'. Mimics rapid voltage drop of 1S batteries.", drone: "65mm Whoop: Air65, Mobula6", icon: "battery" },
+            { id: 5, category: "Signal", goal: "Digital Signal Simulation", sim: "TRYP FPV", link: "https://store.steampowered.com/app/1881200/", map: "Global Settings", tips: "Enable Digital Video Effects. Practice turning back the moment pixelation begins.", drone: "Digital: DJI O3, Walksnail", icon: "wifi" },
+            { id: 6, category: "Signal", goal: "Digital Signal Simulation", sim: "Liftoff: Micro Drones", link: "https://store.steampowered.com/app/1432320/", map: "Global Settings", tips: "Select 'Digital Artifacts'. Simulates HD link stutter from indoor multipath.", drone: "Digital: Walksnail Avatar", icon: "wifi" },
+            { id: 7, category: "Signal", goal: "Analog Signal Simulation", sim: "Liftoff", link: "https://store.steampowered.com/app/441830/", map: "Global Settings", tips: "Enable 'Analog Noise'. Learn how ghosting looks behind concrete walls.", drone: "Analog: Foxeer Reaper", icon: "wifi" },
+            { id: 8, category: "Signal", goal: "Analog Signal Simulation", sim: "Uncrashed", link: "https://store.steampowered.com/app/1682970/", map: "Global Settings", tips: "Enable Analog Simulation. Put high objects between you and spawn point.", drone: "Analog: TBS Unify Pro32", icon: "wifi" },
+            { id: 9, category: "Technical", goal: "Interior House Tours", sim: "Liftoff", link: "https://store.steampowered.com/app/441830/", map: "Joshua Bardwell's House", tips: "Master the garage-to-kitchen line. Focus on lighting transitions.", drone: "2\" Cinewhoop: Pavo20 Pro", icon: "home" },
+            { id: 10, category: "Technical", goal: "Interior House Tours", sim: "TRYP FPV", link: "https://store.steampowered.com/app/1881200/", map: "Real Spots (Bardwell House)", tips: "UE5 version with realistic shadows. Smooth cinematic movements.", drone: "Sub-250g: QAV-S 2 SE", icon: "home" },
+            { id: 11, category: "Technical", goal: "Interior House Tours", sim: "Liftoff: Micro Drones", link: "https://store.steampowered.com/app/1432320/", map: "The Apartment", tips: "Fly under tables to feel the 'ground effect' suction.", drone: "65mm Whoop: Mobula6 2024", icon: "gamepad-2" },
+            { id: 25, category: "Technical", goal: "Commercial / Industrial Tours", sim: "FPV Logic", link: "https://store.steampowered.com/app/2398030/", map: "Factory 1 & 2", tips: "Consistent cinemapping through complex structures. Focus on pipe proximity.", drone: "3.5\" Cinematic or 5\" Cine", icon: "building-2" },
+            { id: 26, category: "Technical", goal: "Commercial / Industrial Tours", sim: "Uncrashed", link: "https://store.steampowered.com/app/1682970/", map: "Industrial Warehouse", tips: "Navigate catwalks and vertical shelving for inspection practice.", drone: "3\" to 5\" Cinewhoop", icon: "building-2" },
+            { id: 27, category: "Technical", goal: "Commercial / Industrial Tours", sim: "Liftoff: Micro Drones", link: "https://store.steampowered.com/app/1432320/", map: "Office / Workspace", tips: "Master tight throttle management for retail or office tours.", drone: "65mm - 75mm Whoop", icon: "briefcase" },
+            { id: 12, category: "Technical", goal: "Freestyle & Bandos", sim: "FPV Logic", link: "https://store.steampowered.com/app/2398030/", map: "Factory 1 / Factory 2", tips: "High-density gaps with raw physics feel. Rewards Matty Flips.", drone: "5\" Freestyle: SpeedyBee Bee35", icon: "building-2" },
+            { id: 13, category: "Technical", goal: "Freestyle & Bandos", sim: "Liftoff", link: "https://store.steampowered.com/app/441830/", map: "The Bando", tips: "Practice technical gaps and throttle timing on power loops.", drone: "5\" Freestyle: Armattan Badger", icon: "building-2" },
+            { id: 28, category: "Technical", goal: "Freestyle & Bandos", sim: "Uncrashed", link: "https://store.steampowered.com/app/1682970/", map: "Abandoned Factory", tips: "High-speed rock-rubbing and proximity trick correction.", drone: "5\" Freestyle: Mark5, Apex DC5", icon: "building-2" },
+            { id: 29, category: "Technical", goal: "Freestyle & Bandos", sim: "TRYP FPV", link: "https://store.steampowered.com/app/1881200/", map: "San Carlo (Urban Ruins)", tips: "Flow from skyscrapers directly into technical street freestyle.", drone: "5\" Cinematic / Freestyle", icon: "building-2" },
+            { id: 30, category: "Technical", goal: "Freestyle & Bandos", sim: "VelociDrone", link: "https://www.velocidrone.com/", map: "Industrial Wasteland", tips: "Low-latency environment. Best for high-precision input lines.", drone: "5\" Freestyle: ImpulseRC Apex", icon: "building-2" },
+            { id: 14, category: "Racing", goal: "Pro Drone Racing", sim: "VelociDrone", link: "https://www.velocidrone.com/", map: "Empty Scene (MultiGP)", tips: "Official MultiGP tracks. The standard for racing muscle memory.", drone: "5\" Racing: Five33 LightSwitch v2", icon: "flag" },
+            { id: 16, category: "Scale", goal: "Mountain Surfing", sim: "TRYP FPV", link: "https://store.steampowered.com/app/1881200/", map: "Alizol / Snow Odyssey", tips: "Ridge-running across 4km maps. Master LoS signal maintenance.", drone: "7\" Long Range: Chimera7, Explorer LR", icon: "mountain" },
+            { id: 18, category: "Scale", goal: "Skyscraper Dives", sim: "DRL Simulator", link: "https://store.steampowered.com/app/641780/", map: "LApocalypse", tips: "Increase Weight Slider to stop floaty feeling on catch.", drone: "5\" Racing: DRL Racer4", icon: "building-2" },
+            { id: 19, category: "Scale", goal: "Skyscraper Dives", sim: "TRYP FPV", link: "https://store.steampowered.com/app/1881200/", map: "San Carlo (City Center)", tips: "High-fidelity vertical drops and lighting transitions.", drone: "5\" Cinematic: AOS 5, Bob5", icon: "building-2" },
+            { id: 20, category: "Dynamic", goal: "Filming and landing on moving boats", sim: "Uncrashed", link: "https://store.steampowered.com/app/1682970/", map: "High City Port", tips: "Match speed from stern at 45°. Wires/mast have active hitboxes.", drone: "5\" Freestyle: Mark5, Apex DC5", icon: "ship" },
+            { id: 21, category: "Dynamic", goal: "Filming and landing on moving boats", sim: "TRYP FPV", link: "https://store.steampowered.com/app/1881200/", map: "San Carlo (Lake)", tips: "Track motorboats. Practice orbits then descend for deck landing.", drone: "7\" Cinematic: Helion10", icon: "anchor" },
+            { id: 22, category: "Dynamic", goal: "Motocross / Bike Chasing", sim: "TRYP FPV", link: "https://store.steampowered.com/app/1881200/", map: "Alizol (TRYP Mode)", tips: "Set AI speed to 1.5x. Practice centered framing on jumps.", drone: "5\" Speed: iFlight Mach R5", icon: "navigation" },
+            { id: 24, category: "Drone Warfare", goal: "Drone Warfare", sim: "FPV Kamikaze Drone", link: "https://store.steampowered.com/app/2330770/", map: "Trench Wasteland", tips: "Stay below trench lip to avoid AI line-of-sight.", drone: "10\" Heavy: Custom 10\" Rig", icon: "crosshair" },
+        ];
+
+        const CATEGORIES = [
+            { name: "Environmental", label: "Wind & Physics", icon: "wind" },
+            { name: "Signal", label: "Signal Sim", icon: "wifi" },
+            { name: "Technical", label: "Indoor & Technical", icon: "home" },
+            { name: "Racing", label: "Pro Racing", icon: "flag" },
+            { name: "Scale", label: "Scale & Cinematic", icon: "mountain" },
+            { name: "Dynamic", label: "Dynamic Chasing", icon: "ship" },
+            { name: "Drone Warfare", label: "Drone Warfare", icon: "crosshair" },
+        ];
+
+        const App = () => {
+            const [selectedGoal, setSelectedGoal] = useState("");
+            const [activeCategory, setActiveCategory] = useState("Environmental");
+            const [showAbout, setShowAbout] = useState(false);
+
+            const profileUrl = "https://instagram.flis8-2.fna.fbcdn.net/v/t51.2885-19/496874128_17842742040487196_3666766007655439963_n.jpg?stp=dst-jpg_s150x150_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.flis8-2.fna.fbcdn.net&_nc_cat=108&_nc_oc=Q6cZ2QEpmF-xMXFZPVbzyeHT2TBA4DoqLKPjR7jvFF7uSTas6KwOOkUJA4XH3b-TQQ8LUCo6P-SNNxC1cZP2iUMsR1O6&_nc_ohc=-5VNfSoV2JYQ7kNvwF7NOWO&_nc_gid=Xl9a8LGqJuzfCppOeMdQcQ&edm=APoiHPcBAAAA&ccb=7-5&oh=00_Afo2J3fg5TWFzFwvYOXgt-RnSJLAORfsQTcQcUJk3RGpkg&oe=69606B4C&_nc_sid=22de04";
+
+            const uniqueGoals = useMemo(() => [...new Set(FPV_DATA.map(d => d.goal))], []);
+            const filteredData = useMemo(() => selectedGoal ? FPV_DATA.filter(d => d.goal === selectedGoal) : FPV_DATA.filter(d => d.category === activeCategory), [selectedGoal, activeCategory]);
+
+            return (
+                <div className="min-h-screen bg-slate-950 text-slate-100 px-4 py-6 md:p-8">
+                    <div className="max-w-6xl mx-auto">
+                        <header className="mb-8 md:mb-12 text-center">
+                            <div className="inline-flex items-center p-2 mb-4 bg-sky-500/10 border border-sky-500/20 rounded-full text-sky-400 text-xs md:text-sm font-medium">
+                                <Icon name="gamepad-2" className="mr-2" /> PC FPV Reference 2026
+                            </div>
+                            <h1 className="text-2xl sm:text-3xl md:text-5xl font-black mb-2 tracking-tight uppercase leading-tight">FPV SIM <span className="text-sky-500">TRAINING GUIDE</span></h1>
+                            <div className="text-slate-400 font-bold text-xs md:text-sm tracking-widest uppercase mb-6 md:mb-8">by Miguel Pais</div>
+                            <button onClick={() => setShowAbout(!showAbout)} className="text-[10px] md:text-xs font-bold text-slate-500 hover:text-sky-400 uppercase tracking-widest border border-slate-800 px-5 py-2 md:px-6 md:py-2.5 rounded-full transition-all">
+                                {showAbout ? "Back to Training" : "About & Contact"}
+                            </button>
+                        </header>
+
+                        {showAbout ? (
+                            <div className="max-w-4xl mx-auto animate-in">
+                                <div className="bg-slate-900 border border-slate-800 rounded-2xl md:rounded-3xl p-6 md:p-12 shadow-2xl space-y-8 md:space-y-12">
+                                    <div className="flex flex-col md:flex-row gap-8 md:gap-12 items-center">
+                                        <img src={profileUrl} className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-slate-800 shadow-2xl object-cover" referrerPolicy="no-referrer" />
+                                        <section className="space-y-4 flex-1 text-center md:text-left">
+                                            <h2 className="text-2xl md:text-3xl font-black text-white">Miguel Pais</h2>
+                                            <p className="text-slate-400 text-base md:text-lg">FPV Pilot & Content Creator. This guide helps pilots bridge the gap between simulation and real-world high-stakes flight.</p>
+                                            <div className="pt-2 md:pt-4 space-y-4 flex flex-col items-center md:items-start">
+                                                <a href="mailto:fpv@miguelppais.com" className="flex items-center text-slate-300 hover:text-sky-400 transition-colors group"><Icon name="mail" className="mr-3 group-hover:bg-sky-500/10 p-1 rounded" /> fpv@miguelppais.com</a>
+                                                <div className="flex space-x-3 md:space-x-4">
+                                                    <a href="https://www.tiktok.com/@miguelpais.fpv" target="_blank" className="p-3 bg-slate-950 rounded-xl md:rounded-2xl hover:text-sky-400 transition-all"><TikTokIcon /></a>
+                                                    <a href="https://www.instagram.com/miguelpais.fpv" target="_blank" className="p-3 bg-slate-950 rounded-xl md:rounded-2xl hover:text-sky-400 transition-all"><Icon name="instagram" /></a>
+                                                    <a href="https://youtube.com/@miguelpaisfpv" target="_blank" className="p-3 bg-slate-950 rounded-xl md:rounded-2xl hover:text-sky-400 transition-all"><Icon name="youtube" /></a>
+                                                </div>
+                                            </div>
+                                        </section>
+                                    </div>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 text-[10px] md:text-xs text-slate-500">
+                                        <div className="bg-slate-950 p-5 md:p-6 rounded-xl md:rounded-2xl border border-slate-800"><h3 className="text-white font-bold mb-2 uppercase tracking-wider">Disclaimer</h3>Simulation reference only. Flight involves risks. Always follow local regulations.</div>
+                                        <div className="bg-slate-950 p-5 md:p-6 rounded-xl md:rounded-2xl border border-slate-800"><h3 className="text-white font-bold mb-2 uppercase tracking-wider">Copyright</h3>Free for FPV community. Copying or redistribution without attribution to Miguel Pais is prohibited.</div>
+                                    </div>
+                                    <div className="text-center text-slate-500 text-[10px] md:text-xs font-medium border-t border-slate-800 pt-8">© 2026 Miguel Pais. All rights reserved.</div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8">
+                                <aside className="lg:col-span-4 space-y-4 md:space-y-6">
+                                    <div className="bg-slate-900 border border-slate-800 rounded-xl md:rounded-2xl p-4 md:p-6 shadow-xl">
+                                        <label className="block text-[10px] md:text-xs font-bold text-slate-500 uppercase mb-3 tracking-widest">Search by Goal</label>
+                                        <select value={selectedGoal} onChange={(e) => setSelectedGoal(e.target.value)} className="w-full bg-slate-950 border border-slate-700 rounded-lg md:rounded-xl p-2.5 md:p-3 text-slate-200 text-sm focus:ring-2 focus:ring-sky-500 outline-none transition-all">
+                                            <option value="">-- All Scenarios --</option>
+                                            {uniqueGoals.map(g => <option key={g} value={g}>{g}</option>)}
+                                        </select>
+                                    </div>
+                                    <div className="bg-slate-900 border border-slate-800 rounded-xl md:rounded-2xl p-1 md:p-2 shadow-xl">
+                                        <div className="flex lg:flex-col overflow-x-auto md:overflow-x-visible no-scrollbar p-1 md:p-0 gap-1 md:gap-0">
+                                            {CATEGORIES.map(cat => (
+                                                <button 
+                                                    key={cat.name} 
+                                                    onClick={() => { setActiveCategory(cat.name); setSelectedGoal(""); }} 
+                                                    className={`flex items-center justify-between whitespace-nowrap lg:w-full px-4 py-2.5 md:py-4 text-xs md:text-sm font-medium rounded-lg md:rounded-xl transition-all flex-shrink-0 lg:flex-shrink-1 ${activeCategory === cat.name && !selectedGoal ? 'bg-sky-500/10 text-sky-400 border border-sky-500/20 md:border-none' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'}`}
+                                                >
+                                                    <div className="flex items-center"><Icon name={cat.icon} className="mr-2 md:mr-3" size={16} />{cat.label}</div>
+                                                    <Icon name="chevron-right" size={14} className="hidden lg:block" />
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </aside>
+                                <main className="lg:col-span-8 space-y-4">
+                                    <div className="flex items-center justify-between mb-2 px-1">
+                                        <h2 className="text-sm md:text-xl font-bold uppercase tracking-tight text-white">{selectedGoal || activeCategory}</h2>
+                                        <span className="text-[9px] md:text-[10px] font-bold text-slate-500 bg-slate-900 px-3 py-1 rounded-full border border-slate-800 uppercase tracking-widest">{filteredData.length} Scenarios</span>
+                                    </div>
+                                    <div className="space-y-4">
+                                        {filteredData.map(item => (
+                                            <div key={item.id} className="bg-slate-900 border border-slate-800 rounded-xl md:rounded-2xl overflow-hidden hover:border-slate-700 transition-all shadow-lg p-5 md:p-6 space-y-4 group">
+                                                <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                                                    <div className="flex items-start gap-3 md:gap-4">
+                                                        <div className="p-2.5 md:p-3 bg-slate-950 border border-slate-800 rounded-lg md:rounded-xl text-sky-500 group-hover:scale-110 transition-transform"><Icon name={item.icon} size={20} /></div>
+                                                        <div>
+                                                            <h3 className="text-base md:text-lg font-bold text-white leading-tight">{item.sim}</h3>
+                                                            <span className="text-[8px] md:text-[9px] uppercase font-black px-2 py-0.5 bg-slate-800 text-slate-400 rounded tracking-tighter">{item.goal}</span>
+                                                        </div>
+                                                    </div>
+                                                    <a href={item.link} target="_blank" className="w-full sm:w-auto text-center inline-flex items-center justify-center px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-[10px] md:text-xs font-bold rounded-lg md:rounded-xl transition-all h-fit shadow-md">OPEN STORE <Icon name="external-link" size={12} className="ml-2"/></a>
+                                                </div>
+                                                <div className="p-3 md:p-4 bg-slate-950/50 border border-slate-800/50 rounded-lg md:rounded-xl text-xs md:text-sm">
+                                                    <div className="text-[9px] md:text-[10px] font-bold text-slate-500 uppercase mb-1 tracking-widest">Location</div>
+                                                    <div className="text-sky-300 font-semibold">{item.map}</div>
+                                                </div>
+                                                <div className="text-xs md:text-sm">
+                                                    <div className="text-[9px] md:text-[10px] font-bold text-slate-500 uppercase mb-1 tracking-widest">Strategy</div>
+                                                    <p className="text-slate-400 leading-relaxed">{item.tips}</p>
+                                                </div>
+                                                <div className="pt-3 border-t border-slate-800/50 text-[9px] md:text-xs font-medium text-slate-500 uppercase tracking-widest flex flex-wrap items-center">Recommended: <span className="text-slate-300 ml-2 normal-case">{item.drone}</span></div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </main>
+                            </div>
+                        )}
+                        <footer className="mt-12 md:mt-20 py-8 border-t border-slate-900 text-center text-slate-600 text-[8px] md:text-[10px] tracking-[0.2em] md:tracking-[0.3em] uppercase">© 2026 Miguel Pais • Reference Training Guide</footer>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
